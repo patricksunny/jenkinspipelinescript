@@ -1,0 +1,48 @@
+pipeline
+ {
+ agent any
+
+    stages 
+  {
+         stage('Git-Checkout')
+          {
+             steps
+             {
+                 echo "Checking out from Git Repository..";
+                 git 'https://github.com/swasa1329/Pipeline_Script.git'
+             }
+          }
+          stage('Build)
+            {
+             steps 
+            {
+                 echo "Building the checked-out project!";
+                 bat "Build.bat"
+            }
+           }
+         stage('Unit-Test')
+           {
+             steps
+             {
+                 echo "Running Unit Tests";
+		 bat "Unit.bat"
+            }
+         }
+         stage('Quality-Gate')
+            {
+             steps
+             {
+                 echo 'Verifying Quality Gates';
+                  bat "Quality.bat"
+            }
+         }
+         stage('Deploy')
+            {
+             steps
+             {
+                 echo 'Deploying....';
+	         bat "Deploy.bat"
+             }
+           }
+     }
+ }
